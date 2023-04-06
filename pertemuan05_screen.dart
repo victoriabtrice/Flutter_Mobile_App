@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -199,7 +201,7 @@ class _Pertemuan05ScreenState extends State<Pertemuan05Screen> {
                 child: Row(
                   children: [
                     Container(
-                      child: Text(''),
+                      child: Text(context.watch<Pertemuan05Provider>().bag.toString()),
                     ),
                     // letakkan chip terpilih disini
                     // atur state
@@ -217,6 +219,14 @@ class _Pertemuan05ScreenState extends State<Pertemuan05Screen> {
                       print(val);
                       prov.setTKJ = val;
                       // atur state
+                      context.read<Pertemuan05Provider>().setTKJStatus = true;
+                      if(prov.setTKJ = prov.statusTKJ){
+                        context.read<Pertemuan05Provider>().isiBag = 'TKJ';
+                      }
+                      else {
+                        context.read<Pertemuan05Provider>().removeBag = 'TKJ';
+                      }
+                      
                     },
                   ),
                   SizedBox(width: 5),
@@ -229,6 +239,12 @@ class _Pertemuan05ScreenState extends State<Pertemuan05Screen> {
                       print(val);
                       prov.setRPL = val;
                       // atur state
+                      context.read<Pertemuan05Provider>().setRPLStatus = true;
+                      if(prov.setRPL = prov.statusRPL){
+                        context.read<Pertemuan05Provider>().isiBag = 'RPL';                      }
+                      else {
+                        context.read<Pertemuan05Provider>().removeBag = 'RPL';
+                      }
                     },
                   ),
                   SizedBox(width: 5),
@@ -241,6 +257,13 @@ class _Pertemuan05ScreenState extends State<Pertemuan05Screen> {
                       print(val);
                       prov.setSMA = val;
                       // atur state
+                      context.read<Pertemuan05Provider>().setSMAStatus = true;
+                      if(prov.setSMA = prov.statusSMA){
+                        context.read<Pertemuan05Provider>().isiBag = 'SMA';
+                      }
+                      else {
+                        context.read<Pertemuan05Provider>().removeBag = 'SMA';
+                      }
                     },
                   )
                 ],
