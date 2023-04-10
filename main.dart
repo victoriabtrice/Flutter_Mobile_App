@@ -48,10 +48,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-
-  var dreamList = ['Web Developer', 'Front-End Developer', 'UI/UX Designer', 'Cyber Security', 'Mobile App Developer'];
+  List<String> dreamList = [
+    'Web Developer',
+    'Front-End Developer',
+    'UI/UX Designer',
+    'Cyber Security',
+    'Mobile App Developer'
+  ];
   String dropdownval = 'UI/UX Designer';
+
+  String picture = 'lib/assets/jobdream3.png';
+  List<String> jobList = [
+    'lib/assets/jobdream1.jpg',
+    'lib/assets/jobdream2.jpg',
+    'lib/assets/jobdream3.png',
+    'lib/assets/jobdream4.jpg',
+    'lib/assets/jobdream5.jpg'
+  ];
+
+  int index = 0;
+  void showDesc() {
+    for (var index = 0; index < dreamList.length; index++) {
+      if (dropdownval == dreamList[index]) {
+        picture = jobList[index];
+      }
+    }
+  }
 
   bool showWidget = false;
   // int _counter = 0;
@@ -99,50 +121,57 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
+            Container(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Switch(
-                        value: showWidget, 
+                        value: showWidget,
                         onChanged: (value) {
                           setState(() {
                             showWidget = value;
                             print(showWidget);
                           });
                         },
-                        activeTrackColor: const Color.fromARGB(255, 231, 179, 191),
-                        activeColor: const Color.fromARGB(255, 152, 90, 105),
+                        activeTrackColor: Colors.blue[100],
+                        activeColor: Colors.blue[300],
                       ),
-                      const Text('Switch', textAlign: TextAlign.left,)
+                      const Text(
+                        'Dream Job',
+                        textAlign: TextAlign.left,
+                      )
                     ],
                   ),
-                ? showWidget
-                  Container(
+                  Offstage(
+                    offstage: !showWidget,
                     child: DropdownButton(
-                      value: dropdownval,
-                      items: dreamList.map((String dreamList) {
-                              return DropdownMenuItem(
-                                value: dreamList,
-                                child: Text(dreamList)
-                              );
-                        }).toList(), 
-                      onChanged: (String? newVal){
-                        setState(() {
-                          dropdownval = newVal!;
-                        });
-                      }
-                    ),
-                  )
-                : Container()
-                ]
-              )
+                        value: dropdownval,
+                        items: dreamList.map((String dreamList) {
+                          return DropdownMenuItem(
+                              value: dreamList, child: Text(dreamList));
+                        }).toList(),
+                        onChanged: (String? newVal) {
+                          setState(() {
+                            dropdownval = newVal!;
+                            showDesc();
+                          });
+                        }),
+                  ),
+                ],
+              ),
+            ),
+            Offstage(
+              offstage: !showWidget,
+              child: Container(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  picture,
+                  height: 700.0,
+                ),
+              ),
             ),
           ],
         ),
