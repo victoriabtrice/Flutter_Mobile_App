@@ -1,7 +1,45 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
+}
+
+MaterialColor generateMaterialColor(Color color) {
+  return MaterialColor(color.value, {
+    50: tintColor(color, 0.9),
+    100: tintColor(color, 0.8),
+    200: tintColor(color, 0.6),
+    300: tintColor(color, 0.4),
+    400: tintColor(color, 0.2),
+    500: color,
+    600: shadeColor(color, 0.1),
+    700: shadeColor(color, 0.2),
+    800: shadeColor(color, 0.3),
+    900: shadeColor(color, 0.4),
+  });
+}
+
+int tintValue(int value, double factor) =>
+    max(0, min((value + ((255 - value) * factor)).round(), 255));
+
+Color tintColor(Color color, double factor) => Color.fromRGBO(
+    tintValue(color.red, factor),
+    tintValue(color.green, factor),
+    tintValue(color.blue, factor),
+    1);
+
+int shadeValue(int value, double factor) =>
+    max(0, min(value - (value * factor).round(), 255));
+
+Color shadeColor(Color color, double factor) => Color.fromRGBO(
+    shadeValue(color.red, factor),
+    shadeValue(color.green, factor),
+    shadeValue(color.blue, factor),
+    1);
+
+class Palette {
+  static const Color primary = Color.fromARGB(255, 255, 180, 198);
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +60,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: generateMaterialColor(Palette.primary),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -48,34 +86,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> dreamList = [
-    'Web Developer',
-    'Front-End Developer',
-    'UI/UX Designer',
-    'Cyber Security',
-    'Mobile App Developer'
-  ];
-  String dropdownval = 'UI/UX Designer';
 
-  String picture = 'lib/assets/dreamjob3.png';
-  List<String> jobList = [
-    'lib/assets/dreamjob1.jpg',
-    'lib/assets/dreamjob2.jpg',
-    'lib/assets/dreamjob3.png',
-    'lib/assets/dreamjob4.jpg',
-    'lib/assets/dreamjob5.jpg'
-  ];
-
-  int index = 0;
-  void showDesc() {
-    for (var index = 0; index < dreamList.length; index++) {
-      if (dropdownval == dreamList[index]) {
-        picture = jobList[index];
-      }
-    }
+  int _selectedIndex = 0;
+  void _onItemTapped(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  bool showWidget = false;
   // int _counter = 0;
 
   // void _incrementCounter() {
@@ -90,6 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
   // }
 
   @override
+
+  List<Widget> pages = const [
+      // HomePage(),
+      // ProductPage(),
+      // Profile()
+    ];
+
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -103,85 +128,39 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Switch(
-                          value: showWidget,
-                          onChanged: (value) {
-                            setState(() {
-                              showWidget = value;
-                              print(showWidget);
-                            });
-                          },
-                          activeTrackColor: Colors.blue[100],
-                          activeColor: Colors.blue[300],
-                        ),
-                        const Text(
-                          'Dream Job',
-                          textAlign: TextAlign.left,
-                        )
-                      ],
-                    ),
-                    Offstage(
-                      offstage: !showWidget,
-                      child: DropdownButton(
-                          value: dropdownval,
-                          items: dreamList.map((String dreamList) {
-                            return DropdownMenuItem(
-                                value: dreamList, child: Text(dreamList));
-                          }).toList(),
-                          onChanged: (String? newVal) {
-                            setState(() {
-                              dropdownval = newVal!;
-                              showDesc();
-                            });
-                          }),
-                    ),
-                  ],
-                ),
-              ),
-              Offstage(
-                offstage: !showWidget,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    picture,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: pages,
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 255, 90, 105),
+        elevation: 5,
+        onPressed: (){},
+        // tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        // backgroundColor: const Color.fromARGB(255, 255, 180, 198),
+        unselectedItemColor: Colors.black,
+        selectedItemColor: const Color.fromARGB(255, 141, 85, 98),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+            activeIcon: Icon(Icons.home)
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.store_outlined),
+            label: 'Store',
+            activeIcon: Icon(Icons.store_rounded)
+          ),
+          
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
