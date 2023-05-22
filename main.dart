@@ -1,45 +1,10 @@
+import 'dart:io';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:flutter_application_1/my_creation.dart';
 
 void main() {
   runApp(const MyApp());
-}
-
-MaterialColor generateMaterialColor(Color color) {
-  return MaterialColor(color.value, {
-    50: tintColor(color, 0.9),
-    100: tintColor(color, 0.8),
-    200: tintColor(color, 0.6),
-    300: tintColor(color, 0.4),
-    400: tintColor(color, 0.2),
-    500: color,
-    600: shadeColor(color, 0.1),
-    700: shadeColor(color, 0.2),
-    800: shadeColor(color, 0.3),
-    900: shadeColor(color, 0.4),
-  });
-}
-
-int tintValue(int value, double factor) =>
-    max(0, min((value + ((255 - value) * factor)).round(), 255));
-
-Color tintColor(Color color, double factor) => Color.fromRGBO(
-    tintValue(color.red, factor),
-    tintValue(color.green, factor),
-    tintValue(color.blue, factor),
-    1);
-
-int shadeValue(int value, double factor) =>
-    max(0, min(value - (value * factor).round(), 255));
-
-Color shadeColor(Color color, double factor) => Color.fromRGBO(
-    shadeValue(color.red, factor),
-    shadeValue(color.green, factor),
-    shadeValue(color.blue, factor),
-    1);
-
-class Palette {
-  static const Color primary = Color.fromARGB(255, 255, 180, 198);
 }
 
 class MyApp extends StatelessWidget {
@@ -60,9 +25,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: generateMaterialColor(Palette.primary),
+        primarySwatch: Colors.amber,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'BurgeRush'),
     );
   }
 }
@@ -86,14 +51,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  int _selectedIndex = 0;
-  void _onItemTapped(int index){
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   // int _counter = 0;
 
   // void _incrementCounter() {
@@ -108,13 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
   // }
 
   @override
-
-  List<Widget> pages = const [
-      // HomePage(),
-      // ProductPage(),
-      // Profile()
-    ];
-
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -128,39 +78,207 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: pages,
+      drawer: Drawer(
+        // backgroundColor: Colors.white,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 130,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                color: Colors.amber[300],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('BurgeRush', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+                    SizedBox(height: 20,),
+                    Text(
+                      'Victoria Beatrice', 
+                      style: TextStyle(fontWeight: FontWeight.bold,),
+                    ),
+                    SizedBox(height: 3,),
+                    Text(
+                      'victoriabtre@gmail.com',
+                    ),
+                  ],
+                )
+              ),
+            ),
+            // UserAccountsDrawerHeader(
+            //   decoration: const BoxDecoration(color: Colors.amber),
+            //   accountName: const Text(
+            //     'Victoria Beatrice', 
+            //     style: TextStyle(fontWeight: FontWeight.bold,),
+            //   ),
+            //   accountEmail: const Text(
+            //     'victoriabtre@gmail.com', 
+            //     style: TextStyle(fontWeight: FontWeight.bold,),
+            //   ),
+            //   currentAccountPicture: ClipRRect(
+            //     borderRadius: BorderRadius.circular(100.0),
+            //     child : Image.asset('lib/assets/main-profile.png',),
+            //   ),
+            // ),
+            ListTile(
+              leading: const Icon(Icons.manage_accounts),
+              title: const Text('Manage Your Account'),
+              onTap: () {
+                
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.fastfood_outlined),
+              title: const Text('My Creations'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyCreation()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.receipt_long),
+              title: const Text('My Order'),
+              onTap: () {
+                
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: const Icon(Icons.help),
+              title: const Text('Help'),
+              onTap: () {
+                
+              },
+            ),
+            const AboutListTile (
+              icon: Icon(Icons.info),
+              // applicationIcon: Icon(),
+              applicationName: 'BurgeRush',
+              applicationVersion: '1.0.0',
+              applicationLegalese: '© 2023 Company',
+              aboutBoxChildren: [
+                
+              ],
+              child: Text('About App'),
+            )
+          ],
+        )
       ),
-      floatingActionButton: FloatingActionButton(
-        foregroundColor: Colors.white,
-        backgroundColor: Color.fromARGB(255, 255, 90, 105),
-        elevation: 5,
-        onPressed: (){},
-        // tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: SingleChildScrollView(
+        child: Center(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Top Creation of the Week', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0), textAlign: TextAlign.left,),
+                SizedBox(height: 5.0,),
+                Container(
+                  decoration: BoxDecoration(color: Colors.amber[200]),
+                  width: MediaQuery.of(context).size.width*0.95,
+                  height: MediaQuery.of(context).size.height*0.2,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(8.0),
+                        width: MediaQuery.of(context).size.width*0.4,
+                        height: MediaQuery.of(context).size.height*0.18,
+                        child: Image.asset('lib/assets/american-burger.jpg', fit: BoxFit.cover,),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text('Rose Bites', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold), ),
+                            Text('by Rosette'),
+                            SizedBox(height: 6.0,),
+                            Text('Likes : 18', style: TextStyle(fontSize: 17.0),),
+                            Text('Price : Rp 25,000.-', style: TextStyle(fontSize: 17.0),),
+                            SizedBox(height: 5.0,),
+                            ElevatedButton(onPressed: (){}, child: Text('View Detail')),
+                            SizedBox(height: 4.0,)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+                // // Carousel
+                //   Container(
+                //     padding: const EdgeInsets.all(0.0),
+                //     child: CarouselSlider(
+                //       options: CarouselOptions(
+                //         height: 200.0,
+                //         enlargeCenterPage: false,
+                //         autoPlay: true,
+                //         aspectRatio: 16/9,
+                //         // autoPlayCurve: Curves.fastOutSlowIn,
+                //         enableInfiniteScroll: true,
+                //         autoPlayAnimationDuration: const Duration(milliseconds: 300),
+                //         viewportFraction: 1.0,
+                //       ),
+                //       items: [
+                //         // 1st Image of Slider
+                //         Container(
+                //           margin: const EdgeInsets.all(0.0),
+                //           decoration: const BoxDecoration(
+                //             image: DecorationImage(
+                //               image: AssetImage('lib/assets/home.c1.png'),
+                //               fit: BoxFit.cover,
+                //             )
+                //           ),
+                //         ),
+                //         // 2nd Image of Slider
+                //         Container(
+                //           margin: const EdgeInsets.all(0.0),
+                //           decoration: const BoxDecoration(
+                //             image: DecorationImage(
+                //               image: AssetImage('lib/assets/home.c2.1.png'),
+                //               fit: BoxFit.cover,
+                //             )
+                //           ),
+                //         ),
+                //         // 3rd Image of Slider
+                //         Container(
+                //           margin: const EdgeInsets.all(0.0),
+                //           decoration: const BoxDecoration(
+                //             image: DecorationImage(
+                //               image: AssetImage('lib/assets/home.c3.png'),
+                //               fit: BoxFit.cover,
+                //             )
+                //           ),
+                //         ),
+                //     ],)
+                //   ),
+              ],
+            ),
+          ),
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        // backgroundColor: const Color.fromARGB(255, 255, 180, 198),
-        unselectedItemColor: Colors.black,
-        selectedItemColor: const Color.fromARGB(255, 141, 85, 98),
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-            activeIcon: Icon(Icons.home)
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.store_outlined),
-            label: 'Store',
-            activeIcon: Icon(Icons.store_rounded)
-          ),
-          
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
