@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pertemuan11/pertemuan11_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
 
 class Pertemuan11Screen extends StatefulWidget {
   const Pertemuan11Screen({super.key});
@@ -43,6 +45,8 @@ class _Pertemuan11ScreenState extends State<Pertemuan11Screen> {
               ListTile(
                 leading: CircleAvatar(backgroundImage: NetworkImage(item['img'])),
                 title: Text(item['model']),
+                isThreeLine: true,
+                subtitle: Text("by " + item['developer'] + "\nprice : " + NumberFormat.currency(locale: 'ID').format(item['price']) + "\nrate : " + item['rating'].toString()),
               ),
               const Divider()
             ],
@@ -71,6 +75,16 @@ class _Pertemuan11ScreenState extends State<Pertemuan11Screen> {
               onTap: () => prov.ubahList('laptop'),
               leading: const Icon(Icons.laptop),
               title: const Text('Laptop'),
+            )
+          ),
+          const PopupMenuDivider(),
+          PopupMenuItem(
+            child: ListTile(
+              onTap: () { 
+                
+              },
+              leading: const Icon(Icons.delete),
+              title: const Text('Clear'),
             )
           ),
         ];
