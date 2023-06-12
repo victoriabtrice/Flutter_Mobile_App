@@ -25,156 +25,277 @@ class _NotifSettPageState extends State<NotifSettPage> {
             title: const Text('Ringtone'),
             subtitle: Text(phring),
             onTap: () {
-              var dialog = SimpleDialog(
+              setState(() {
+                isSwitched = !isSwitched;
+              });
+              var dialog = AlertDialog(
                 title: const Text('Phone Ringtone'),
-                children: [
-                  SingleChildScrollView(
-                    child: Column(children: [
-                      SimpleDialogOption(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              leading: Radio(
-                                value: 'None',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('None'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Callisto',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Callisto'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Ganymede',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Ganymede'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Luna',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Luna'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Oberon',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Oberon'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Phobos',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Phobos'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Dione',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Dione'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Light',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Light'),
-                            ),
-                            ListTile(
-                              leading: Radio(
-                                value: 'Valley',
-                                activeColor: Colors.blue,
-                                groupValue: phring,
-                                onChanged: (value) {
-                                  setState(() {
-                                    phring = value!;
-                                  });
-                                },
-                              ),
-                              title: const Text('Valley'),
-                            ),
-                          ],
-                        ),
-                      )
-                    ]),
-                  ),
-                  Row(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            setState(() {
-                              Navigator.pop(context);
-                            });
-                          },
-                          child: const Text('CANCEL')),
-                      TextButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context)
-                              ..removeCurrentMaterialBanner()
-                              ..showMaterialBanner(showBanner(context));
-                          },
-                          child: const Text('OK'))
-                    ],
-                  )
+                scrollable: true,
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          Navigator.pop(context);
+                        });
+                      },
+                      child: const Text('CANCEL')),
+                  TextButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context)
+                          ..removeCurrentMaterialBanner()
+                          ..showMaterialBanner(showBanner(context));
+                      },
+                      child: const Text('OK'))
                 ],
+                content: Column(children: [
+                  ListTile(
+                    title: const Text('None'),
+                    leading: Radio(
+                      value: 'None',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Callisto'),
+                    leading: Radio(
+                      value: 'Callisto',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Ganymede'),
+                    leading: Radio(
+                      value: 'Ganymede',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Luna'),
+                    leading: Radio(
+                      value: 'Luna',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Oberon'),
+                    leading: Radio(
+                      value: 'Oberon',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Phobos'),
+                    leading: Radio(
+                      value: 'Phobos',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Dione'),
+                    leading: Radio(
+                      value: 'Dione',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Valley'),
+                    leading: Radio(
+                      value: 'Valley',
+                      groupValue: phring,
+                      onChanged: (value) {
+                        setState(() {
+                          phring = value!;
+                        });
+                      },
+                    ),
+                  )
+                ]),
               );
+              // var dialog = SimpleDialog(
+              //   title: const Text('Phone Ringtone'),
+              //   children: [
+              //     SingleChildScrollView(
+              //       child: Column(children: [
+              //         SimpleDialogOption(
+              //           child: Column(
+              //             children: [
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'None',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('None'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Callisto',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Callisto'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Ganymede',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Ganymede'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Luna',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Luna'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Oberon',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Oberon'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Phobos',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Phobos'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Dione',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Dione'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Light',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Light'),
+              //               ),
+              //               ListTile(
+              //                 leading: Radio(
+              //                   value: 'Valley',
+              //                   activeColor: Colors.blue,
+              //                   groupValue: phring,
+              //                   onChanged: (value) {
+              //                     setState(() {
+              //                       phring = value!;
+              //                     });
+              //                   },
+              //                 ),
+              //                 title: const Text('Valley'),
+              //               ),
+              //             ],
+              //           ),
+              //         )
+              //       ]),
+              //     ),
+              //     Row(
+              //       children: [
+              //         TextButton(
+              //             onPressed: () {
+              //               setState(() {
+              //                 Navigator.pop(context);
+              //               });
+              //             },
+              //             child: const Text('CANCEL')),
+              //         TextButton(
+              //             onPressed: () {
+              //               ScaffoldMessenger.of(context)
+              //                 ..removeCurrentMaterialBanner()
+              //                 ..showMaterialBanner(showBanner(context));
+              //             },
+              //             child: const Text('OK'))
+              //       ],
+              //     )
+              //   ],
+              // );
               showDialog(
                   context: context,
                   builder: (context) {
