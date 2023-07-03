@@ -9,8 +9,8 @@ class Pertemuan14Screen extends StatefulWidget {
 
 class _Pertemuan14ScreenState extends State<Pertemuan14Screen> {
   DateTime _date = DateTime.now();
-  DateTimeRange _range =
-      DateTimeRange(start: DateTime.now(), end: DateTime(2023, 07, 06));
+  DateTimeRange _range = DateTimeRange(
+      start: DateTime.now(), end: DateTime.now().add(const Duration(days: 3)));
 
   TextEditingController? _time;
   @override
