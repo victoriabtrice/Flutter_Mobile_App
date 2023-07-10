@@ -63,20 +63,29 @@ class _Pertemuan15ScreenState extends State<Pertemuan15Screen> {
           ),
           Column(
             children: [listImg != null
-            ? Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                height: 300,
-                width: MediaQuery.of(context).size.width,
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 4,
-                  children: listImg!.map((e){
-                    return Image.file(File(e.path));
-                  }).toList(),),
-              ),
-              )
+            // ? Padding(
+              //     padding: const EdgeInsets.all(16.0),
+              //     child: SizedBox(
+              //       height: 300,
+              //       width: MediaQuery.of(context).size.width,
+              //       child: GridView.count(
+              //         crossAxisCount: 2,
+              //         crossAxisSpacing: 10,
+              //         mainAxisSpacing: 4,
+              //         children: listImg!.map((e) {
+              //           return Image.file(File(e.path));
+              //         }).toList(),
+              //       ),
+              //     ),
+              //   )
+              ? Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: CarouselSlider(
+                      options: CarouselOptions(aspectRatio: 16 / 9),
+                      items: listImg!.map((e) {
+                        return Image.network(e.path);
+                      }).toList()),
+                )
             : Container(),
           ])
         ]
